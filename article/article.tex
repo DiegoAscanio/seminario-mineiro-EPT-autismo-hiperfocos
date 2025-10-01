@@ -57,28 +57,38 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \ifLuaTeX
 \usepackage[bidi=basic]{babel}
@@ -210,28 +220,26 @@ longitudinais e protocolos replicáveis em diferentes níveis de ensino.
 
 \textbf{Palavras-chave:} autismo; hiperfoco; educação em programação.
 
-\hypertarget{sec:introducao}{%
-\section{Introdução}\label{sec:introducao}}
+\section{Introdução}\label{sec:introducao}
 
 O método de alfabetização de Paulo Freire apresenta como etapa inicial a
 investigação da realidade dos alfabetizandos para a proposição de
 palavras geradoras, pois, segundo Freire, a leitura do mundo precede a
-leitura das palavras (\protect\hyperlink{ref-freire1967}{Freire, 1967}
-).
+leitura das palavras (\citeproc{ref-freire1967}{Freire, 1967} ).
 
 O Hiperfoco de pessoas autistas é uma característica presente em vários
 indivíduos portadores do TEA que caracteriza o interesse intenso por
 temas e atividades por vezes bastante específicos e peculiares tais
 quais: dinossauros, astronomia, bandeiras, capitais de países, trens,
 ônibus, meios de transporte, jogos eletrônicos, dentre outros
-(\protect\hyperlink{ref-ashinoff2021}{Ashinoff; Abu-Akel, 2021} ).
+(\citeproc{ref-ashinoff2021}{Ashinoff; Abu-Akel, 2021} ).
 
 Desenvolver atividades ligadas aos hiperfocos é egossintônico às pessoas
 autistas e acaba ganhando contornos autotélicos, uma vez que o
 desenvolvimento de tais atividades desperta prazer, sentimentos
 positivos e constantemente coloca indivíduos autistas em estado de
 \emph{flow}\footnote{ Teoria de psicologia desenvolvida por
-  Csikszentmihalyi (\protect\hyperlink{ref-csikszentmihalyi1990}{1990})}.
+  Csikszentmihalyi (\citeproc{ref-csikszentmihalyi1990}{1990})}.
 
 Este trabalho, inspirado na etapa inicial da alfabetização freireana, no
 hiperfoco de pessoas autistas e na teoria do \emph{flow}, propõe
@@ -242,12 +250,10 @@ de programação, que também pode ser considerado como um letramento
 digital, de sentido precedente à simples apresentação das palavras ---
 instruções, comandos, códigos --- do alfabeto digital.
 
-\hypertarget{sec:referencial-teorico}{%
-\section{Referencial teórico}\label{sec:referencial-teorico}}
+\section{Referencial teórico}\label{sec:referencial-teorico}
 
-\hypertarget{muxe9todo-freireano-de-alfabetizauxe7uxe3o}{%
 \subsection{Método Freireano de
-Alfabetização}\label{muxe9todo-freireano-de-alfabetizauxe7uxe3o}}
+Alfabetização}\label{muxe9todo-freireano-de-alfabetizauxe7uxe3o}
 
 O método de alfabetização de Paulo Freire fundamenta-se em uma pedagogia
 crítica que busca superar a chamada educação bancária --- aquela em que
@@ -258,8 +264,8 @@ conscientização em que o educando aprende a ``ler o mundo'' antes de
 ``ler a palavra''. Nesse sentido, o método parte de ``palavras
 geradoras'', retiradas do universo concreto dos alunos, como instrumento
 para promover uma alfabetização contextualizada e crítica
-(\protect\hyperlink{ref-freire1967}{Freire, 1967};
-\protect\hyperlink{ref-gadotti1996}{Gadotti, 1996} ).
+(\citeproc{ref-freire1967}{Freire, 1967};
+\citeproc{ref-gadotti1996}{Gadotti, 1996} ).
 
 A primeira experiência sistematizada ocorreu em Angicos (RN), em 1963,
 quando aproximadamente 300 trabalhadores foram alfabetizados em apenas
@@ -269,39 +275,38 @@ palavras geradoras e a problematização crítica dos temas emergentes.
 Assim, a alfabetização deixa de ser um ato meramente técnico e
 transforma-se em ato político, no qual os sujeitos compreendem sua
 condição histórica e se reconhecem como agentes transformadores da
-realidade (\protect\hyperlink{ref-brandao1981}{Brandão, 1981} ;
-\protect\hyperlink{ref-freire1968}{Freire, 1968}).
+realidade (\citeproc{ref-brandao1981}{Brandão, 1981} ;
+\citeproc{ref-freire1968}{Freire, 1968}).
 
 Com o tempo, a proposta de Freire influenciou políticas públicas no
 Brasil e em diversos países, sendo apropriada por programas de
 alfabetização de jovens e adultos em escala internacional. Essa
 perspectiva integra linguagem, cultura e poder, reafirmando o caráter
 emancipador da educação. Autores como Torres
-(\protect\hyperlink{ref-torres1987}{1987}) e Freire; Macedo
-(\protect\hyperlink{ref-macedo1987}{1987}) aprofundaram a discussão
-sobre a pedagogia freiriana, destacando seu papel na construção de
-práticas educativas democráticas e socialmente comprometidas.
-Reconhecido pela UNESCO, como apresentado por Guimarães; Sumbo
-(\protect\hyperlink{ref-guimaraes2021}{2021}), o legado de Paulo Freire
-permanece atual e inspira debates contemporâneos sobre educação popular,
-justiça social e pedagogia crítica.
+(\citeproc{ref-torres1987}{1987}) e Freire; Macedo
+(\citeproc{ref-macedo1987}{1987}) aprofundaram a discussão sobre a
+pedagogia freiriana, destacando seu papel na construção de práticas
+educativas democráticas e socialmente comprometidas. Reconhecido pela
+UNESCO, como apresentado por Guimarães; Sumbo
+(\citeproc{ref-guimaraes2021}{2021}), o legado de Paulo Freire permanece
+atual e inspira debates contemporâneos sobre educação popular, justiça
+social e pedagogia crítica.
 
-\hypertarget{hiperfoco}{%
-\subsection{Hiperfoco}\label{hiperfoco}}
+\subsection{Hiperfoco}\label{hiperfoco}
 
 O hiperfoco pode ser definido como um estado de concentração intensa e
 prolongada em uma atividade específica, frequentemente acompanhado pela
 exclusão de outros estímulos do entorno --- ambientais e/ou sociais
-(\protect\hyperlink{ref-ashinoff2021}{Ashinoff; Abu-Akel, 2021} ). No
-caso de pessoas com Transtorno do Espectro Autista (TEA), essa
-característica assume uma ambivalência: de um lado, pode levar ao
-desinteresse ou negligência de tarefas cotidianas que não dialogam com
-seus interesses imediatos; de outro, quando orientado adequadamente,
-pode ser convertido em um recurso motivacional poderoso para o
-aprendizado. Trabalhos recentes destacam que o hiperfoco costuma estar
-associado a sentimentos positivos vivenciados durante atividades de
-interesse, o que reforça seu potencial pedagógico
-(\protect\hyperlink{ref-hupfeld2022}{Hupfeld et al., 2022} ).
+(\citeproc{ref-ashinoff2021}{Ashinoff; Abu-Akel, 2021} ). No caso de
+pessoas com Transtorno do Espectro Autista (TEA), essa característica
+assume uma ambivalência: de um lado, pode levar ao desinteresse ou
+negligência de tarefas cotidianas que não dialogam com seus interesses
+imediatos; de outro, quando orientado adequadamente, pode ser convertido
+em um recurso motivacional poderoso para o aprendizado. Trabalhos
+recentes destacam que o hiperfoco costuma estar associado a sentimentos
+positivos vivenciados durante atividades de interesse, o que reforça seu
+potencial pedagógico (\citeproc{ref-hupfeld2022}{Hupfeld et al., 2022}
+).
 
 No campo educacional, abordagens tradicionais frequentemente falham em
 engajar estudantes autistas justamente pela ausência de contextos
@@ -313,8 +318,8 @@ ensino-aprendizagem. Como apontam estudos recentes, ao alinhar conteúdos
 escolares a áreas de interesse intenso --- como, por exemplo, jogos
 digitais ---, educadores podem promover maior engajamento, facilitar a
 aquisição de habilidades complexas e estimular a autonomia
-(\protect\hyperlink{ref-deOliveira2019}{De Oliveira; De Farias; De
-Freitas, 2019} ).
+(\citeproc{ref-deOliveira2019}{De Oliveira; De Farias; De Freitas, 2019}
+).
 
 A ambivalência do hiperfoco e as características negativas intrínsicas à
 possíveis ausências de controle consciente durante os episódios em que
@@ -324,60 +329,56 @@ alimentar, cuidar da higiene pessoal ou interagir socialmente --- fazem
 com que o hiperfoco seja percebido de forma depreciativa por muitos
 educadores e familiares de pessoas autistas. No entanto, existem
 evidências --- {[} Ashinoff; Abu-Akel
-(\protect\hyperlink{ref-ashinoff2021}{2021}); {]} --- que sugerem que o
-hiperfoco e o \emph{flow}\footnote{Comportamento psicológico amplamente
-  elogiado e incentivado na sociedade contemporânea, apresentado na
-  próxima seção} são os mesmos fenômenos compreendidos em perspectivas
-distintas.
+(\citeproc{ref-ashinoff2021}{2021}); {]} --- que sugerem que o hiperfoco
+e o \emph{flow}\footnote{Comportamento psicológico amplamente elogiado e
+  incentivado na sociedade contemporânea, apresentado na próxima seção}
+são os mesmos fenômenos compreendidos em perspectivas distintas.
 
-\hypertarget{teoria-psicoluxf3gica-do-flow}{%
 \subsection{\texorpdfstring{Teoria Psicológica do
-\emph{Flow}}{Teoria Psicológica do Flow}}\label{teoria-psicoluxf3gica-do-flow}}
+\emph{Flow}}{Teoria Psicológica do Flow}}\label{teoria-psicoluxf3gica-do-flow}
 
 A teoria psicológica do \emph{flow}, desenvolvida por Mihaly
 Csikszentmihalyi, descreve um estado mental de imersão completa em uma
 atividade, caracterizado por foco intenso, perda da noção do tempo, e
 sensação de prazer intrínseco. Segundo Csikszentmihalyi
-(\protect\hyperlink{ref-csikszentmihalyi1990}{1990}) \emph{apud}
-Siqueira (\protect\hyperlink{ref-siqueira2025}{2025}), o \emph{flow}
-ocorre quando há um equilíbrio entre os desafios da tarefa e as
-habilidades do indivíduo, favorecendo um desempenho ótimo. Este estado é
-particularmente relevante em contextos criativos, esportivos,
-educacionais e laborais, onde a motivação intrínseca desempenha papel
-central no engajamento e na produtividade.
+(\citeproc{ref-csikszentmihalyi1990}{1990}) \emph{apud} Siqueira
+(\citeproc{ref-siqueira2025}{2025}), o \emph{flow} ocorre quando há um
+equilíbrio entre os desafios da tarefa e as habilidades do indivíduo,
+favorecendo um desempenho ótimo. Este estado é particularmente relevante
+em contextos criativos, esportivos, educacionais e laborais, onde a
+motivação intrínseca desempenha papel central no engajamento e na
+produtividade.
 
 Pesquisas mais recentes têm revisitado e expandido a teoria do
 \emph{flow}, aplicando-a a novos contextos como a jardinagem, ambientes
 digitais e educação ambiental. Por exemplo, Vieira; Lauro
-(\protect\hyperlink{ref-vieira2025}{2025}) exploraram o estado de
-\emph{flow} na prática de jardinagem sob a ótica da Psicologia Positiva
-e Ambiental, apontando como atividades cotidianas podem favorecer
-bem-estar psicológico quando vivenciadas em estados de fluxo. Já
-Assumpção; Costa (\protect\hyperlink{ref-assumpcao2025}{2025}) discutem
-o sentido existencial do \emph{flow}, propondo uma interseção entre a
-abordagem de Csikszentmihalyi
-(\protect\hyperlink{ref-csikszentmihalyi1990}{1990}) e autores como
-Hösle (\protect\hyperlink{ref-hosle2003}{2003}), ampliando o escopo
+(\citeproc{ref-vieira2025}{2025}) exploraram o estado de \emph{flow} na
+prática de jardinagem sob a ótica da Psicologia Positiva e Ambiental,
+apontando como atividades cotidianas podem favorecer bem-estar
+psicológico quando vivenciadas em estados de fluxo. Já Assumpção; Costa
+(\citeproc{ref-assumpcao2025}{2025}) discutem o sentido existencial do
+\emph{flow}, propondo uma interseção entre a abordagem de
+Csikszentmihalyi (\citeproc{ref-csikszentmihalyi1990}{1990}) e autores
+como Hösle (\citeproc{ref-hosle2003}{2003}), ampliando o escopo
 filosófico da teoria.
 
 Essas releituras contemporâneas demonstram que a teoria do \emph{flow}
 permanece relevante para compreender a relação entre subjetividade,
 atividade e realização pessoal. Os autores contemporâneos reconhecem a
 importância da proposta original de Csikszentmihalyi
-(\protect\hyperlink{ref-csikszentmihalyi1990}{1990}), mas também indicam
-sua adaptabilidade a diferentes campos da psicologia moderna. Isso
-sugere que o \emph{flow} é uma construção teórica viva, que continua a
-inspirar investigações sobre a natureza da experiência humana e as
-condições que a tornam significativa.
+(\citeproc{ref-csikszentmihalyi1990}{1990}), mas também indicam sua
+adaptabilidade a diferentes campos da psicologia moderna. Isso sugere
+que o \emph{flow} é uma construção teórica viva, que continua a inspirar
+investigações sobre a natureza da experiência humana e as condições que
+a tornam significativa.
 
-\hypertarget{linguagens-de-programauxe7uxe3o}{%
 \subsection{Linguagens de
-Programação}\label{linguagens-de-programauxe7uxe3o}}
+Programação}\label{linguagens-de-programauxe7uxe3o}
 
 As linguagens de programação constituem um sistema de notação formal que
 permite descrever, de forma precisa, instruções que podem ser
 interpretadas por humanos e executadas por máquinas
-(\protect\hyperlink{ref-louden2003}{Louden, 2003}). Essenciais para o
+(\citeproc{ref-louden2003}{Louden, 2003}). Essenciais para o
 desenvolvimento de soluções computacionais, elas podem ser classificadas
 conforme diferentes critérios, como o paradigma de programação, o tipo
 de tradução ou o nível de abstração. No contexto deste trabalho, no
@@ -395,8 +396,8 @@ formal. Em contrapartida, ambientes de programação visual baseados em
 blocos oferecem uma \textbf{alternativa mais intuitiva}, pois
 \textbf{reduzem a carga cognitiva inicial} e facilitam o foco na lógica
 e no raciocínio computacional, sem a necessidade de conhecimento prévio
-de comandos textuais (\protect\hyperlink{ref-marinho2022}{Marinho,
-2022}; \protect\hyperlink{ref-souza2021}{Souza; Rodrigues, 2021}).
+de comandos textuais (\citeproc{ref-marinho2022}{Marinho, 2022};
+\citeproc{ref-souza2021}{Souza; Rodrigues, 2021}).
 
 A baixa barreira de entrada das linguagens de programação visuais,
 especialmente as baseadas em blocos, tem sido valorizada em contextos
@@ -410,16 +411,15 @@ a criatividade e o engajamento dos estudantes, tornando a aprendizagem
 mais acessível. Guias de aplicação sistemática dessa linguagem na
 educação básica apontam sua eficácia na introdução de noções
 fundamentais de programação e no desenvolvimento do pensamento
-computacional (\protect\hyperlink{ref-silva2022}{Silva et al., 2022};
-\protect\hyperlink{ref-souza2018}{SOUZA; COSTA, 2018}).
+computacional (\citeproc{ref-silva2022}{Silva et al., 2022};
+\citeproc{ref-souza2018}{SOUZA; COSTA, 2018}).
 
 Transcorridos os conceitos fundamentais para o entendimento do trabalho,
 são apresentados na próxima seção Trabalhos Relacionados que investigam
 hiperfocos, teoria do flow e o comportamento de pessoas autistas
 aplicados a contextos educacionais.
 
-\hypertarget{trabalhos-relacionados}{%
-\section{Trabalhos Relacionados}\label{trabalhos-relacionados}}
+\section{Trabalhos Relacionados}\label{trabalhos-relacionados}
 
 Esta seção de trabalhos relacionados apresenta o empenho possível de
 verificação do estado da arte sobre o tema do presente trabalho
@@ -467,34 +467,34 @@ Objetivo Principal
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-(\protect\hyperlink{ref-grotewiel2023}{Grotewiel et al., 2023}) & Artigo
-& Experiences of hyperfocus and flow in college students with and
-without Attention Deficit Hyperactivity Disorder (ADHD) & Investigar a
-relação entre hiperfoco e flow em estudantes universitários, comparando
-aqueles com e sem sintomas clinicamente significativos de TDAH, a fim de
+(\citeproc{ref-grotewiel2023}{Grotewiel et al., 2023}) & Artigo &
+Experiences of hyperfocus and flow in college students with and without
+Attention Deficit Hyperactivity Disorder (ADHD) & Investigar a relação
+entre hiperfoco e flow em estudantes universitários, comparando aqueles
+com e sem sintomas clinicamente significativos de TDAH, a fim de
 verificar se esses estados representam fenômenos distintos ou apenas
 perspectivas diferentes de uma mesma experiência de absorção em
 tarefas. \\
-(\protect\hyperlink{ref-perrin2023}{Perrin, 2023}) & Tese de doutorado &
-A sense of purpose: Perspectives of autistic young people & Explorar
-como jovens autistas no Reino Unido vivenciam e conceituam o ``sentido
-de propósito'', investigando suas experiências cotidianas e perspectivas
-de futuro, a fim de avaliar se trabalhar esse conceito pode favorecer
-seu bem-estar. \\
-(\protect\hyperlink{ref-tjarks2024}{Tjarks, 2024}) & Monografia &
-Unraveling the Complex Interplay Between Intrinsic Motivation,
-Hyperfocus, and Academic Performance & Examinar se o hiperfoco atua como
-mediador entre a motivação intrínseca e o desempenho acadêmico de
-estudantes universitários, investigando suas relações e implicações para
-o sucesso acadêmico. \\
-(\protect\hyperlink{ref-swingler2024}{Swingler, 2024}) & Dissertação de
-Mestrado & TEACHING STUDENTS WITH ADHD: Secondary teachers' experiences
-of adapting classroom practice to cater to the needs of students with
-ADHD & Compreender como professores australianos do ensino médio adaptam
-suas estratégias de manejo de sala de aula para apoiar estudantes com
-TDAH, considerando fatores contextuais que influenciam suas práticas e
+(\citeproc{ref-perrin2023}{Perrin, 2023}) & Tese de doutorado & A sense
+of purpose: Perspectives of autistic young people & Explorar como jovens
+autistas no Reino Unido vivenciam e conceituam o ``sentido de
+propósito'', investigando suas experiências cotidianas e perspectivas de
+futuro, a fim de avaliar se trabalhar esse conceito pode favorecer seu
+bem-estar. \\
+(\citeproc{ref-tjarks2024}{Tjarks, 2024}) & Monografia & Unraveling the
+Complex Interplay Between Intrinsic Motivation, Hyperfocus, and Academic
+Performance & Examinar se o hiperfoco atua como mediador entre a
+motivação intrínseca e o desempenho acadêmico de estudantes
+universitários, investigando suas relações e implicações para o sucesso
+acadêmico. \\
+(\citeproc{ref-swingler2024}{Swingler, 2024}) & Dissertação de Mestrado
+& TEACHING STUDENTS WITH ADHD: Secondary teachers' experiences of
+adapting classroom practice to cater to the needs of students with ADHD
+& Compreender como professores australianos do ensino médio adaptam suas
+estratégias de manejo de sala de aula para apoiar estudantes com TDAH,
+considerando fatores contextuais que influenciam suas práticas e
 percepções. \\
-(\protect\hyperlink{ref-bailey2024}{Bailey, 2024}) & Tese de doutorado &
+(\citeproc{ref-bailey2024}{Bailey, 2024}) & Tese de doutorado &
 Neurodiversity and Learning Engagement in Higher Education & Investigar,
 sob a lente da neurodiversidade, como estudantes neurodivergentes ---
 com foco em autistas e também em alunos com TDAH e ansiedade ---
@@ -502,10 +502,10 @@ vivenciam engajamento e inclusão em contextos de ensino superior,
 propondo e validando um novo instrumento para avaliar experiências de
 aprendizagem e identificar barreiras e oportunidades de adaptação
 pedagógica. \\
-(\protect\hyperlink{ref-hendry2025}{Hendry et al., 2025}) & Artigo &
-Learning from the community: iterative co-production of a programme to
-support the development of attention, regulation and thinking skills in
-toddlers at elevated likelihood of autism or ADHD & Superar abordagens
+(\citeproc{ref-hendry2025}{Hendry et al., 2025}) & Artigo & Learning
+from the community: iterative co-production of a programme to support
+the development of attention, regulation and thinking skills in toddlers
+at elevated likelihood of autism or ADHD & Superar abordagens
 cognitivo-comportamentais tradicionais centradas na redução de sintomas
 diagnósticos, propondo uma intervenção afirmativa da neurodiversidade
 que apoia o desenvolvimento das funções executivas de crianças autistas
@@ -533,8 +533,7 @@ originalidade do presente trabalho. Sem considerações adicionais sobre
 trabalhos relacionados a serem efetuadas, a próxima seção apresenta a
 metodologia proposta.
 
-\hypertarget{sec:metodologia}{%
-\section{Metodologia}\label{sec:metodologia}}
+\section{Metodologia}\label{sec:metodologia}
 
 Esta seção de metodologia apresenta o modelo construtivo baseado em
 hiperfoco --- sintetizado pela Figura \ref{fig:modelohiperfocos} ---
@@ -568,9 +567,7 @@ Fonte: Elaborado pelos autores.
 
 \end{Fonte}
 
-\hypertarget{subsec:escuta}{%
-\subsection{Escuta ativa e construção de
-confiança}\label{subsec:escuta}}
+\subsection{Escuta ativa e construção de confiança}\label{subsec:escuta}
 
 A escuta ativa pode se iniciar a partir de uma aproximação genuína com a
 realidade do estudante autista. É recomendável demonstrar interesse por
@@ -606,9 +603,8 @@ compreender de forma mais ampla a realidade do aluno, favorecendo
 intervenções pedagógicas mais sensíveis e personalizadas, promovendo uma
 base adequada para a descoberta de hiperfocos.
 
-\hypertarget{subsec:descoberta}{%
 \subsection{Descoberta e aplicação de
-hiperfocos}\label{subsec:descoberta}}
+hiperfocos}\label{subsec:descoberta}
 
 Uma vez estabelecida a relação de confiança com a pessoa autista, é
 necessário identificar os hiperfocos que ela apresenta, por meio do
@@ -638,9 +634,8 @@ em instrumento de valorização dos talentos individuais, promovendo não
 apenas a aquisição de habilidades técnicas, mas também a autonomia
 criativa e o fortalecimento da motivação do estudante.
 
-\hypertarget{subsec:criacao}{%
 \subsection{Criação de projetos com base nos
-hiperfocos}\label{subsec:criacao}}
+hiperfocos}\label{subsec:criacao}
 
 É nesta etapa que o ensino da programação se concretiza através da
 proposição (e construção) de projetos práticos alinhados aos hiperfocos
@@ -656,16 +651,15 @@ diferenciadas. Linguagens visuais baseadas em blocos, como Scratch,
 Node-RED ou mesmo ambientes mais simplificados como Delphi, são
 alternativas viáveis e eficazes.
 
-Como argumentado por Bruner
-(\protect\hyperlink{ref-bruner1960process}{1960}), qualquer pessoa pode
-aprender sobre qualquer coisa, desde que a matéria seja apresentada de
-forma intelectualmente honesta e adaptada ao estágio de desenvolvimento
-do aprendiz. Como comprometimentos do desenvolvimento intelectual podem
-afetar o aprendizado da pessoa autista acometida por eles, devem,
-portanto, ser considerados. Isso implica que o aprendizado da pessoa
-autista não pode ser medido pelas mesmas métricas aplicadas para
-aferição do aprendizado de pessoas neurotípicas. Assim, a avaliação do
-progresso dos estudantes autistas deve ser feita com métricas
+Como argumentado por Bruner (\citeproc{ref-bruner1960process}{1960}),
+qualquer pessoa pode aprender sobre qualquer coisa, desde que a matéria
+seja apresentada de forma intelectualmente honesta e adaptada ao estágio
+de desenvolvimento do aprendiz. Como comprometimentos do desenvolvimento
+intelectual podem afetar o aprendizado da pessoa autista acometida por
+eles, devem, portanto, ser considerados. Isso implica que o aprendizado
+da pessoa autista não pode ser medido pelas mesmas métricas aplicadas
+para aferição do aprendizado de pessoas neurotípicas. Assim, a avaliação
+do progresso dos estudantes autistas deve ser feita com métricas
 personalizadas, reconhecendo que eles aprendem e processam a informação
 de forma única. Essa abordagem adaptativa não apenas respeita a
 individualidade de cada um, mas também é um direito garantido por lei.
@@ -721,8 +715,7 @@ os resultados decorrentes dessa abordagem e verificar sua efetividade,
 são apresentados, na próxima seção, os achados correspondentes em
 \nameref{sec:resultados}.
 
-\hypertarget{sec:resultados}{%
-\section{Resultados e discussões}\label{sec:resultados}}
+\section{Resultados e discussões}\label{sec:resultados}
 
 A metodologia do modelo construtivo baseado em hiperfoco foi aplicada
 para o ensino de programação para dois estudantes autistas nível de
@@ -756,8 +749,8 @@ Mostra Específica de Trabalhos e Aplicações (META) do CEFET-MG
 Divinópolis\footnote{Trabalho premiado na categoria 3 - área: Ciências
   Humanas, Sociais, Biológicas e da Saúde, Linguística, Letras e Artes -
   modalidade: Ciência Aplicada/Inovação Tecnológica
-  (\protect\hyperlink{ref-certificadometa2025}{Carvalho; Chamon, 2025}).}.
-As Figuras \ref{fig:dispositivo} e \ref{fig:dispositivoscratch} mostram,
+  (\citeproc{ref-certificadometa2025}{Carvalho; Chamon, 2025}).}. As
+Figuras \ref{fig:dispositivo} e \ref{fig:dispositivoscratch} mostram,
 respectivamente, o dispositivo e o programa \emph{Scratch} desenvolvido
 pelo estudante para controlar a alavanca de pânico.
 
@@ -864,8 +857,7 @@ Sendo suficientes os resultados e discussões apresentados, não restam
 observações ulteriores a serem efetuadas, restando apenas detalhar
 conclusões e oportunidades de trabalhos futuros na próxima seção.
 
-\hypertarget{sec:conclusao}{%
-\section{Conclusão}\label{sec:conclusao}}
+\section{Conclusão}\label{sec:conclusao}
 
 Como evidências da efetividade da metodologia proposta, os resultados
 obtidos oferecem indícios de que a abordagem pode ser bem sucedida para
@@ -883,8 +875,8 @@ ferramenta experimental mais adequada para inferir nexos de causalidade.
 Existe também a posssibilidade de adaptação da intervenção para
 estudantes neurotípicos, visto que o estado de \emph{flow} pode ser
 potencialmente acessado por qualquer pessoa, como defendido por
-Csikszentmihalyi (\protect\hyperlink{ref-csikszentmihalyi1990}{1990}).
-Neste sentido são oportunidades de trabalhos futuros:
+Csikszentmihalyi (\citeproc{ref-csikszentmihalyi1990}{1990}). Neste
+sentido são oportunidades de trabalhos futuros:
 
 \begin{itemize}
 \tightlist
@@ -927,165 +919,164 @@ dois estudantes autistas que participaram da intervenção metodológica é
 expressa a mais profunda gratidão pela confiança depositada e pelo
 empenho demonstrado durante todo o processo.
 
-\hypertarget{bibliography}{%
-\section*{Referências}\label{bibliography}}
+\section*{Referências}\label{bibliography}
 \addcontentsline{toc}{section}{Referências}
 
-\hypertarget{refs}{}
+\phantomsection\label{refs}
 \begin{CSLReferences}{0}{1}
-\leavevmode\vadjust pre{\hypertarget{ref-ashinoff2021}{}}%
+\bibitem[\citeproctext]{ref-ashinoff2021}
 ASHINOFF, Brandon K.; ABU-AKEL, Ahmad.
 \href{https://doi.org/10.1007/s00426-019-01245-8}{Hyperfocus: the
 forgotten frontier of attention}. \textbf{Psychological Research}, v.
 85, n. 1, p. 1--19, 2021.
 
-\leavevmode\vadjust pre{\hypertarget{ref-assumpcao2025}{}}%
+\bibitem[\citeproctext]{ref-assumpcao2025}
 ASSUMPÇÃO, G. A.; COSTA, D. R.
 \href{https://periodicos.ufsc.br/index.php/ethic/article/view/100953}{Sentido
 em Mihaly Csikszentmihalyi e Vittorio Hösle}. \textbf{ethic@ - An
 International Journal for Moral Philosophy}, 2025.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bailey2024}{}}%
+\bibitem[\citeproctext]{ref-bailey2024}
 BAILEY, Julie.
 \textbf{\href{https://www.repository.cam.ac.uk/handle/1810/375102}{Neurodiversity
 and Learning Engagement in Higher Education}}. PhD
 Thesis---\emph{{[}S.l.{]}}: Cambridge University, jun. 2024.
 
-\leavevmode\vadjust pre{\hypertarget{ref-brandao1981}{}}%
+\bibitem[\citeproctext]{ref-brandao1981}
 BRANDÃO, Carlos Rodrigues. \textbf{O que é método Paulo Freire}. São
 Paulo: Brasiliense, 1981.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bruner1960process}{}}%
+\bibitem[\citeproctext]{ref-bruner1960process}
 BRUNER, Jerome S. \textbf{The Process of Education}. Cambridge, MA:
 Harvard University Press, 1960.
 
-\leavevmode\vadjust pre{\hypertarget{ref-certificadometa2025}{}}%
+\bibitem[\citeproctext]{ref-certificadometa2025}
 CARVALHO, Glenda Aparecida de; CHAMON, Carla Simone. \textbf{Certificado
 de Premiação de Segundo Lugar da XXXIII META CEFET-MG}. Certificado (p.
 3) disponibilizado em formato PDF, 2025. Disponível em:
 \textless{}\url{https://www.meta2024.cefetmg.br/wp-content/uploads/sites/362/2025/03/SegundoDV.pdf}\textgreater.
 Acesso em: 25 set. 2025
 
-\leavevmode\vadjust pre{\hypertarget{ref-csikszentmihalyi1990}{}}%
+\bibitem[\citeproctext]{ref-csikszentmihalyi1990}
 CSIKSZENTMIHALYI, Mihaly. \textbf{Flow: {The} psychology of optimal
 experience}. \emph{{[}S.l.{]}}: Harper \& Row New York, 1990. v. 1990
 
-\leavevmode\vadjust pre{\hypertarget{ref-deOliveira2019}{}}%
+\bibitem[\citeproctext]{ref-deOliveira2019}
 DE OLIVEIRA, Roger Correa; DE FARIAS, Cleilton Sampaio; DE FREITAS,
 Cesar Gomes. \href{https://doi.org/10.4236/ce.2019.106094}{The Inclusion
 of People with Autism Spectrum Disorder in the Field of Vocational
 Education - Case IFAC - Campus Rio Branco}. \textbf{Creative Education},
 v. 10, n. 6, p. 1251--1258, 2019.
 
-\leavevmode\vadjust pre{\hypertarget{ref-freire1967}{}}%
+\bibitem[\citeproctext]{ref-freire1967}
 FREIRE, Paulo. \textbf{Educação como prática da liberdade}. Rio de
 Janeiro: Paz e Terra, 1967.
 
-\leavevmode\vadjust pre{\hypertarget{ref-freire1968}{}}%
+\bibitem[\citeproctext]{ref-freire1968}
 FREIRE, Paulo. \textbf{Pedagogia do oprimido}. Rio de Janeiro: Paz e
 Terra, 1968.
 
-\leavevmode\vadjust pre{\hypertarget{ref-macedo1987}{}}%
+\bibitem[\citeproctext]{ref-macedo1987}
 FREIRE, Paulo; MACEDO, Donaldo. \textbf{Literacy: Reading the Word and
 the World}. Londres: Routledge, 1987.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gadotti1996}{}}%
+\bibitem[\citeproctext]{ref-gadotti1996}
 GADOTTI, Moacir. \textbf{Paulo Freire: uma biobibliografia}. São Paulo:
 Cortez / Instituto Paulo Freire / UNESCO, 1996.
 
-\leavevmode\vadjust pre{\hypertarget{ref-grotewiel2023}{}}%
+\bibitem[\citeproctext]{ref-grotewiel2023}
 GROTEWIEL, Morgan M. \emph{et al.}
 \href{https://doi.org/10.1007/s12144-021-02539-0}{Experiences of
 hyperfocus and flow in college students with and without {Attention}
 {Deficit} {Hyperactivity} {Disorder} ({ADHD})}. \textbf{Current
 Psychology}, v. 42, n. 16, p. 13265--13275, jun. 2023.
 
-\leavevmode\vadjust pre{\hypertarget{ref-guimaraes2021}{}}%
+\bibitem[\citeproctext]{ref-guimaraes2021}
 GUIMARÃES, Paula; SUMBO, Hernani.
 \href{https://doi.org/10.18675/1981-8106.v31.n.64.s16188}{{PAULO}
 {FREIRE} {E} {A} {UNESCO}: {ANÁLISE} {DE} {RECOMENDAÇÕES} {DE}
 {POLÍTICAS} {DE} {EDUCAÇÃO} {DE} {ADULTOS}}. \textbf{Educação: Teoria e
 Prática}, v. 31, n. 64, jan. 2021.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hendry2025}{}}%
+\bibitem[\citeproctext]{ref-hendry2025}
 HENDRY, Alexandra \emph{et al.} Learning from the community: iterative
 co-production of a programme to support the development of attention,
 regulation and thinking skills in toddlers at elevated likelihood of
 autism or {ADHD}. \textbf{Research involvement and engagement}, v. 11,
 n. 1, p. 7, 2025.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hosle2003}{}}%
+\bibitem[\citeproctext]{ref-hosle2003}
 HÖSLE, Vittorio.
 \href{https://doi.org/10.15448/1984-6746.2003.1.34779}{{GRANDEZA} {E}
 {LIMITES} {DA} {FILOSOFIA} {PRÁTICA} {DE} {KANT}}. \textbf{Veritas
 (Porto Alegre)}, v. 48, n. 1, p. 99--119, dez. 2003.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hupfeld2022}{}}%
+\bibitem[\citeproctext]{ref-hupfeld2022}
 HUPFELD, Kathleen E. \emph{et al.}
 \href{https://doi.org/10.3389/frym.2021.625433}{Hyperfocus: The ADHD
 Superpower}. \textbf{Frontiers for Young Minds}, v. 10, p. 625433, 2022.
 
-\leavevmode\vadjust pre{\hypertarget{ref-louden2003}{}}%
+\bibitem[\citeproctext]{ref-louden2003}
 LOUDEN, Kenneth C. \textbf{Programming Languages: Principles and
 Practice}. \emph{{[}S.l.{]}}: Thomson Brooks/Cole, 2003.
 
-\leavevmode\vadjust pre{\hypertarget{ref-marinho2022}{}}%
+\bibitem[\citeproctext]{ref-marinho2022}
 MARINHO, F. G. T.
 \textbf{\href{https://tede.ufam.edu.br/handle/tede/8809}{Uprobotics:
 Robótica educacional utilizando linguagem visual baseada em blocos}}.
 Dissertação (Mestrado em Informática)---\emph{{[}S.l.{]}}: Universidade
 Federal do Amazonas, 2022.
 
-\leavevmode\vadjust pre{\hypertarget{ref-perrin2023}{}}%
+\bibitem[\citeproctext]{ref-perrin2023}
 PERRIN, Jacqueline. \textbf{A {Sense} of {Purpose}: {Perspectives} of
 {Autistic} {Young} {People}}. PhD thesis---Oxford, UK: Oxford Brookes
 University, dez. 2023.
 
-\leavevmode\vadjust pre{\hypertarget{ref-silva2022}{}}%
+\bibitem[\citeproctext]{ref-silva2022}
 SILVA, Janaína Mendes Pereira da \emph{et al.}
 \href{https://doi.org/10.3895/rbect.v15n2.9614}{A utilização do
 {Scratch} como ferramenta pedagógica na percepção de quem ensinará
 matemática}. \textbf{Revista Brasileira de Ensino de Ciência e
 Tecnologia}, v. 15, n. 2, 2022.
 
-\leavevmode\vadjust pre{\hypertarget{ref-siqueira2025}{}}%
+\bibitem[\citeproctext]{ref-siqueira2025}
 SIQUEIRA, Pedro Pinheiro de. \textbf{High {Energy} {Physics}: um jogo
 digital de cartas educativo sobre estruturas atômicas}. Trabalho de
 Conclusão de Curso (Bacharelado em Engenharia de
 Computação)---Divinópolis, MG, Brasil: Centro Federal de Educação
 Tecnológica de Minas Gerais (CEFET-MG), Campus Divinópolis, set. 2025.
 
-\leavevmode\vadjust pre{\hypertarget{ref-souza2021}{}}%
+\bibitem[\citeproctext]{ref-souza2021}
 SOUZA, Leandro Delgado de; RODRIGUES, Elisângela Valevein.
 \href{https://doi.org/10.22456/1982-1654.109902}{Instituto de {Hackers}:
 {O} pensamento computacional aplicado ao ensino médio integrado
 profissionalizante}. \textbf{Informática na educação: teoria \&
 prática}, v. 24, n. 1 Jan/Abr, jun. 2021.
 
-\leavevmode\vadjust pre{\hypertarget{ref-souza2018}{}}%
+\bibitem[\citeproctext]{ref-souza2018}
 SOUZA, Michel Figueiredo de; COSTA, Christine Sertã. \textbf{Scratch:
 Guia pr{á}tico para aplica{ç}{ã}o na Educa{ç}{ã}o B{á}sica}. Rio de
 Janeiro: Imperial, 2018.
 
-\leavevmode\vadjust pre{\hypertarget{ref-swingler2024}{}}%
+\bibitem[\citeproctext]{ref-swingler2024}
 SWINGLER, Lee.
 \textbf{\href{https://researchportal.murdoch.edu.au/esploro/outputs/graduate/TEACHING-STUDENTS-WITH-ADHD-Secondary-teachers/991005714570107891}{{TEACHING}
 {STUDENTS} {WITH} {ADHD}: {Secondary} teachers' experiences of adapting
 classroom practice to cater to the needs of students with {ADHD}}}.
 mathesis---\emph{{[}S.l.{]}}: Murdoch University, abr. 2024.
 
-\leavevmode\vadjust pre{\hypertarget{ref-tjarks2024}{}}%
+\bibitem[\citeproctext]{ref-tjarks2024}
 TJARKS, Elena.
 \textbf{\href{https://gmwpublic.studenttheses.ub.rug.nl/3037/}{Unraveling
 the {Complex} {Interplay} {Between} {Intrinsic} {Motivation},
 {Hyperfocus}, and {Academic} {Performance}}}. b---\emph{{[}S.l.{]}}:
 University of Groningen, jan. 2024.
 
-\leavevmode\vadjust pre{\hypertarget{ref-torres1987}{}}%
+\bibitem[\citeproctext]{ref-torres1987}
 TORRES, Rosa Maria (ORG.). \textbf{Educação popular: um encontro com
 Paulo Freire}. São Paulo: Loyola, 1987.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vieira2025}{}}%
+\bibitem[\citeproctext]{ref-vieira2025}
 VIEIRA, D. A. M.; LAURO, M. M.
 \href{http://seer.uniacademia.edu.br/index.php/cadernospsicologia/article/view/4501}{ESTADO
 DE FLUXO FLOW E A PRÁTICA DE JARDINAGEM: UMA ANÁLISE A PARTIR DA
