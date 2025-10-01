@@ -1,0 +1,5 @@
+input-files: [article.md]
+reference-doc: ./../assets/templates/abnt.docx
+log-file: article.log
+output-file: article.docx
+to: docx
